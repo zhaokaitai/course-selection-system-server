@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: select-course
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/select_course_manager
+    username: root
+    password: 123456
+server:
+  port: 8080
