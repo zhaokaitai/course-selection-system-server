@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 用户接口
+ * 学生接口
  *
  * @author 秦乾正
  */
@@ -78,7 +78,7 @@ public class StudentController {
         // 查询用户是否存在
 
         Student student = new Student();
-        student.setStudentNumber("202122450731");
+        student.setStudentNumber("202122450735");
         student.setUserPassword("12345678");
         student.setUserName("qqz");
         int result = studentMapper.insert(student);

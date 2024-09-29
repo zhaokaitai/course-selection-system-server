@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heub.selectcourse.mapper.OperationRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.heub.selectcourse.model.domain.OperationRecord">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="studentNumber" column="student_number" jdbcType="VARCHAR"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="courseCode" column="course_code" jdbcType="VARCHAR"/>
+            <result property="courseName" column="course_name" jdbcType="VARCHAR"/>
+            <result property="courseOperation" column="course_operation" jdbcType="TINYINT"/>
+            <result property="time" column="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,student_number,user_name,
+        course_code,course_name,course_operation,
+        time
+    </sql>
+</mapper>

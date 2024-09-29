@@ -6,6 +6,7 @@ import com.heub.selectcourse.common.ErrorCode;
 /**
  * 自定义异常类
  *
+ * @author 秦乾正
  */
 public class BusinessException extends RuntimeException {
 

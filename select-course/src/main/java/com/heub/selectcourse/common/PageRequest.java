@@ -7,6 +7,7 @@ import java.io.Serializable;
 /**
  * 通用分页请求参数
  *
+ * @author 秦乾正
  */
 @Data
 public class PageRequest implements Serializable {

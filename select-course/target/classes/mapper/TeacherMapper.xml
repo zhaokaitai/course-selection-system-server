@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heub.selectcourse.mapper.TeacherMapper">
+
+    <resultMap id="BaseResultMap" type="com.heub.selectcourse.model.domain.Teacher">
+            <id property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="teacherSpellname" column="teacher_spellname" jdbcType="VARCHAR"/>
+            <result property="teacherEnname" column="teacher_enname" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="unit" column="unit" jdbcType="VARCHAR"/>
+            <result property="educationBackgroude" column="education_backgroude" jdbcType="VARCHAR"/>
+            <result property="workTime" column="work_time" jdbcType="INTEGER"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="researchMethods" column="research_methods" jdbcType="VARCHAR"/>
+            <result property="department" column="department" jdbcType="VARCHAR"/>
+            <result property="position" column="position" jdbcType="VARCHAR"/>
+            <result property="teacherIntroduction" column="teacher_introduction" jdbcType="VARCHAR"/>
+            <result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        teacher_id,teacher_name,teacher_spellname,
+        teacher_enname,gender,unit,
+        education_backgroude,work_time,phone,
+        research_methods,department,position,
+        teacher_introduction,avatar_url
+    </sql>
+</mapper>
