@@ -14,11 +14,10 @@ public class StudentRegisterQuery implements Serializable {
 
     private static final long serialVersionUID = 3191241716373120793L;
 
-    private String studentAccount;
+    private String studentNumber;
 
     private String studentPassword;
 
     private String checkPassword;
 
-    private String studentNumber;
 }

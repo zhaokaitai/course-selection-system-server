@@ -51,10 +51,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
             return null;
         }
         // 账户不能重复
-        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("studentNumber", studentNumber);
-        long count = studentMapper.selectCount(queryWrapper);
-        if (count > 0) {
+
+        if (studentMapper.selectById(studentNumber) != null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
         }
         // 2. 加密
@@ -85,12 +83,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         // 2. 加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + studentPassword).getBytes());
         // 查询用户是否存在
-        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("studentNumber", studentNumber);
-        queryWrapper.eq("userPassword", encryptPassword);
-        Student student = studentMapper.selectOne(queryWrapper);
-        // 用户不存在
-        if (student == null) {
+        Student student = studentMapper.selectById(studentNumber);
+        if (student == null ||!student.getUserPassword().equals(encryptPassword)) {
             return null;
         }
         // 3. 用户脱敏

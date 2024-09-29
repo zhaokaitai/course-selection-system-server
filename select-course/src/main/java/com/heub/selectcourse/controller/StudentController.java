@@ -72,23 +72,6 @@ public class StudentController {
         return ResultUtils.success(result);
     }
 
-    @GetMapping("/a")
-    public BaseResponse<Integer> s() {
-
-        // 查询用户是否存在
-
-        Student student = new Student();
-        student.setStudentNumber("202122450735");
-        student.setUserPassword("12345678");
-        student.setUserName("qqz");
-        int result = studentMapper.insert(student);
-
-        return ResultUtils.success(result);
-
-    }
-
-
-
 
 
 }
