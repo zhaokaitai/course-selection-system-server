@@ -1,12 +1,12 @@
 package com.heub.selectcourse.model.query;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.heub.selectcourse.common.PageRequest;
 import lombok.Data;
 
-import java.io.Serializable;
+
 
 /**
  * 
