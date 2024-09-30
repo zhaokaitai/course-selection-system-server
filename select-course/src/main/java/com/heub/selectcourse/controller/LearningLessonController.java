@@ -1,10 +1,18 @@
 package com.heub.selectcourse.controller;
 
+import com.heub.selectcourse.common.BaseResponse;
+import com.heub.selectcourse.common.ResultUtils;
+import com.heub.selectcourse.model.domain.LearningLesson;
+import com.heub.selectcourse.model.domain.TeachingClass;
+import com.heub.selectcourse.model.vo.LearningLessonVo;
 import com.heub.selectcourse.service.LearningLessonService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author qqz
@@ -18,4 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LearningLessonController {
     @Resource
     private LearningLessonService learningLessonService;
+
+    //获取个人课表相关信息
+    @GetMapping()
+    public BaseResponse<List<LearningLessonVo>> getLearningLesson(String studentNumber) {
+        List<LearningLessonVo> result = learningLessonService.searchSelfLesson(studentNumber);
+        return ResultUtils.success(result);
+    }
 }

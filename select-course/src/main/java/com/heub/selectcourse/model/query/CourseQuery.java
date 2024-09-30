@@ -13,7 +13,6 @@ import lombok.Data;
  * @author 秦乾正
  * @TableName course
  */
-@TableName(value ="course")
 @Data
 public class CourseQuery extends PageRequest  {
     /**

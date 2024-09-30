@@ -30,10 +30,6 @@ public class LearningLesson implements Serializable {
      */
     private Long classId;
 
-    /**
-     * 教工号
-     */
-    private String teacherId;
 
     /**
      * 是否自选（0-是 1不是）

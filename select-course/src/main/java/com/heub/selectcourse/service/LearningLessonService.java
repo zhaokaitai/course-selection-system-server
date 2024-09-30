@@ -3,6 +3,10 @@ package com.heub.selectcourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.heub.selectcourse.model.domain.LearningLesson;
+import com.heub.selectcourse.model.domain.TeachingClass;
+import com.heub.selectcourse.model.vo.LearningLessonVo;
+
+import java.util.List;
 
 /**
 * @author 秦乾正
@@ -11,4 +15,5 @@ import com.heub.selectcourse.model.domain.LearningLesson;
 */
 public interface LearningLessonService extends IService<LearningLesson> {
 
+    List<LearningLessonVo> searchSelfLesson(String studentNumber);
 }

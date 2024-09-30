@@ -1,11 +1,21 @@
 package com.heub.selectcourse.service.impl;
 
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.mapper.LearningLessonMapper;
+import com.heub.selectcourse.mapper.TeachingClassMapper;
 import com.heub.selectcourse.model.domain.LearningLesson;
+import com.heub.selectcourse.model.domain.TeachingClass;
+import com.heub.selectcourse.model.vo.LearningLessonVo;
 import com.heub.selectcourse.service.LearningLessonService;
+import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * @author 秦乾正
@@ -16,6 +26,39 @@ import org.springframework.stereotype.Service;
 public class LearningLessonServiceImpl extends ServiceImpl<LearningLessonMapper, LearningLesson>
     implements LearningLessonService {
 
+    @Resource
+    private LearningLessonMapper learningLessonMapper;
+
+    @Resource
+    private TeachingClassMapper teachingClassMapper;
+
+    @Override
+    public List<LearningLessonVo> searchSelfLesson(String studentNumber) {
+        //1.验证非空
+        if(studentNumber.isEmpty()){
+            return null;
+        }
+        //2.获取相关信息
+        //2.1获取课表相关信息
+        QueryWrapper<LearningLesson> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("student_number", studentNumber);
+        List<LearningLesson> learningLessons = learningLessonMapper.selectList(queryWrapper);
+        //2.2获取教学班相关信息
+
+        List<LearningLessonVo> learningLessonVos = new ArrayList<>();
+        for (LearningLesson learningLesson : learningLessons) {
+            //加入课表的相关信息
+            LearningLessonVo learningLessonVo = new LearningLessonVo();
+            BeanUtils.copyProperties(learningLesson, learningLessonVo);
+            //加入教学班的相关信息
+           /* QueryWrapper<TeachingClass> teachingClassQueryWrapper = new QueryWrapper<>();
+            teachingClassQueryWrapper.eq("id", learningLesson.getClassId());*/
+            TeachingClass teachingClass = teachingClassMapper.selectById(learningLesson.getId());
+            BeanUtils.copyProperties(teachingClass, learningLessonVo);
+            learningLessonVos.add(learningLessonVo);
+        }
+        return learningLessonVos;
+    }
 }
 
 
