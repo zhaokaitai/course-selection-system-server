@@ -29,10 +29,6 @@ public class StudentController {
     @Resource
     private StudentService studentService;
 
-    @Resource
-    private StudentMapper studentMapper;
-
-
     @PostMapping("/register")
     public BaseResponse<String> studentRegister(@RequestBody StudentRegisterQuery studentRegisterRequest) {
         if (studentRegisterRequest == null) {
