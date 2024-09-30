@@ -8,12 +8,11 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="studentNumber" column="student_number" jdbcType="VARCHAR"/>
             <result property="classId" column="class_id" jdbcType="BIGINT"/>
-            <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
             <result property="idOptional" column="id_optional" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,student_number,class_id,
-        teacher_id,id_optional
+        id_optional
     </sql>
 </mapper>
