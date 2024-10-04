@@ -3,6 +3,7 @@ package com.heub.selectcourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.heub.selectcourse.model.domain.Manager;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
 * @author 秦乾正
@@ -11,4 +12,7 @@ import com.heub.selectcourse.model.domain.Manager;
 */
 public interface ManagerService extends IService<Manager> {
 
+    Manager managerLogin(String managerNumber, String managerPassword, HttpServletRequest request);
+
+    int managerLogout(HttpServletRequest request);
 }
