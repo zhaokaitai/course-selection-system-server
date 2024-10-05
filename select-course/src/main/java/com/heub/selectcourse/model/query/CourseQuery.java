@@ -33,8 +33,6 @@ public class CourseQuery extends PageRequest  {
     private Long collegeId;
 
 
-
-
     /**
      * 课程类别
      */
