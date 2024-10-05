@@ -1,11 +1,15 @@
 package com.heub.selectcourse.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.mapper.TeachingClassMapper;
 import com.heub.selectcourse.model.domain.TeachingClass;
 import com.heub.selectcourse.service.TeachingClassService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author 秦乾正
@@ -16,6 +20,14 @@ import org.springframework.stereotype.Service;
 public class TeachingClassServiceImpl extends ServiceImpl<TeachingClassMapper, TeachingClass>
     implements TeachingClassService {
 
+    @Resource
+    private TeachingClassMapper teachingClassMapper;
+
+    @Override
+    public List<TeachingClass> getTeachingClassList(String courseCode) {
+
+        return teachingClassMapper.selectList(new QueryWrapper<TeachingClass>().eq("course_code", courseCode));
+    }
 }
 
 

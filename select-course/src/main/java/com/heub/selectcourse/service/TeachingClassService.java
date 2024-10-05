@@ -4,6 +4,8 @@ package com.heub.selectcourse.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.heub.selectcourse.model.domain.TeachingClass;
 
+import java.util.List;
+
 /**
 * @author 秦乾正
 * @description 针对表【teaching_class】的数据库操作Service
@@ -11,4 +13,5 @@ import com.heub.selectcourse.model.domain.TeachingClass;
 */
 public interface TeachingClassService extends IService<TeachingClass> {
 
+    List<TeachingClass> getTeachingClassList(String courseCode);
 }

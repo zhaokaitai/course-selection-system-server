@@ -1,8 +1,13 @@
 package com.heub.selectcourse.service;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.heub.selectcourse.model.domain.Course;
+import com.heub.selectcourse.model.query.CourseQuery;
+import com.heub.selectcourse.model.vo.CourseClassVo;
+
+import java.util.List;
 
 /**
 * @author 秦乾正
@@ -11,4 +16,6 @@ import com.heub.selectcourse.model.domain.Course;
 */
 public interface CourseService extends IService<Course> {
 
+
+    List<CourseClassVo> getCourseClassList(CourseQuery courseQuery);
 }
