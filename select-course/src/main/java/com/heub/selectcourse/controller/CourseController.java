@@ -41,7 +41,7 @@ public class CourseController {
     private TeachingClassService teachingClassService;
 
 
-    @GetMapping("/page")
+    @GetMapping("/list")
     public BaseResponse<List<CourseClassVo>> courseClassList(CourseQuery courseQuery) {
 
         return  ResultUtils.success(courseService.getCourseClassList(courseQuery));

@@ -3,7 +3,10 @@ package com.heub.selectcourse.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.heub.selectcourse.common.ErrorCode;
+import com.heub.selectcourse.exception.BusinessException;
 import com.heub.selectcourse.mapper.ManagerMapper;
+import com.heub.selectcourse.model.domain.Manager;
 import com.heub.selectcourse.model.domain.Manager;
 import com.heub.selectcourse.model.domain.Manager;
 import com.heub.selectcourse.service.ManagerService;
@@ -74,6 +77,40 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager>
     public int managerLogout(HttpServletRequest request) {
         request.getSession().removeAttribute("managerLoginState");
         return 1;
+    }
+
+    @Override
+    public String managerRegister(String managerNumber, String managerPassword, String checkPassword) {
+
+        if (managerPassword.length() < 8 || checkPassword.length() < 8) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户密码过短");
+        }
+        // 账户不能包含特殊字符
+        String validPattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Matcher matcher = Pattern.compile(validPattern).matcher(managerNumber);
+        if (matcher.find()) {
+            return null;
+        }
+        // 密码和校验密码相同
+        if (!managerPassword.equals(checkPassword)) {
+            return null;
+        }
+        // 账户不能重复
+
+        if (managerMapper.selectById(managerNumber) != null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
+        }
+        // 2. 加密
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + managerPassword).getBytes());
+        // 3. 插入数据
+        Manager manager = new Manager();
+        manager.setAccount(managerNumber);
+        manager.setPassword(encryptPassword);
+        boolean saveResult = this.save(manager);
+        if (!saveResult) {
+            return null;
+        }
+        return manager.getAccount();
     }
 }
 

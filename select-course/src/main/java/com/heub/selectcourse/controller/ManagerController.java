@@ -6,6 +6,7 @@ import com.heub.selectcourse.common.ErrorCode;
 import com.heub.selectcourse.common.ResultUtils;
 import com.heub.selectcourse.model.domain.Manager;
 import com.heub.selectcourse.model.query.ManagerLoginQuery;
+import com.heub.selectcourse.model.query.ManagerRegisterQuery;
 import com.heub.selectcourse.service.ManagerService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ManagerController {
     @Resource
     private ManagerService managerService;
+
+    @PostMapping("/register")
+    public BaseResponse<String> managerRegister(@RequestBody ManagerRegisterQuery managerRegisterRequest) {
+        if (managerRegisterRequest == null) {
+            return null;
+        }
+        String managerNumber = managerRegisterRequest.getManagerNumber();
+        String managerPassword = managerRegisterRequest.getManagerPassword();
+        String checkPassword = managerRegisterRequest.getCheckPassword();
+
+        if (StrUtil.hasBlank(managerNumber,managerPassword, checkPassword)) {
+            return null;
+        }
+        String result = managerService.managerRegister(managerNumber, managerPassword, checkPassword);
+        return ResultUtils.success(result);
+    }
 
     @PostMapping("/login")
     public BaseResponse<Manager> managerLogin(@RequestBody ManagerLoginQuery managerLoginRequest, HttpServletRequest request) {

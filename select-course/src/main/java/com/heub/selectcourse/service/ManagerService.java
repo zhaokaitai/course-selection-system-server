@@ -15,4 +15,6 @@ public interface ManagerService extends IService<Manager> {
     Manager managerLogin(String managerNumber, String managerPassword, HttpServletRequest request);
 
     int managerLogout(HttpServletRequest request);
+
+    String managerRegister(String managerNumber, String managerPassword, String checkPassword);
 }
