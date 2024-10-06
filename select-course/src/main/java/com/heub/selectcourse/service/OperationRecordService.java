@@ -2,6 +2,7 @@ package com.heub.selectcourse.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.heub.selectcourse.model.domain.Course;
 import com.heub.selectcourse.model.domain.OperationRecord;
 
 /**
@@ -11,4 +12,7 @@ import com.heub.selectcourse.model.domain.OperationRecord;
 */
 public interface OperationRecordService extends IService<OperationRecord> {
 
+    Boolean addCreRecord(String studentNumber, Long classId, Course course) ;
+
+    Boolean addDelRecord(String studentNumber, Long classId, Course course) ;
 }

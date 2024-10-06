@@ -4,7 +4,9 @@ package com.heub.selectcourse.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.heub.selectcourse.model.domain.Course;
+import com.heub.selectcourse.model.query.ChooseCourseQuery;
 import com.heub.selectcourse.model.query.CourseQuery;
+import com.heub.selectcourse.model.query.DropCourseQuery;
 import com.heub.selectcourse.model.vo.CourseClassVo;
 
 import java.util.List;
@@ -18,4 +20,8 @@ public interface CourseService extends IService<Course> {
 
 
     List<CourseClassVo> getCourseClassList(CourseQuery courseQuery);
+
+    boolean dropCourse(DropCourseQuery dropCourseQuery);
+
+    boolean chooseCourse(ChooseCourseQuery chooseCourseQuery);
 }

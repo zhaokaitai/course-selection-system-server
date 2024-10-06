@@ -28,6 +28,12 @@ public class TeachingClassServiceImpl extends ServiceImpl<TeachingClassMapper, T
 
         return teachingClassMapper.selectList(new QueryWrapper<TeachingClass>().eq("course_code", courseCode));
     }
+
+    @Override
+    public String getCOurseCode(Integer teachingClassId) {
+        TeachingClass teachingClass = teachingClassMapper.selectById(teachingClassId);
+        return teachingClass.getCourseCode();
+    }
 }
 
 
