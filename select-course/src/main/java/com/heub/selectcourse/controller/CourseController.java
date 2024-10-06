@@ -56,6 +56,7 @@ public class CourseController {
 
     }
 
+    //退课操作
     @PostMapping("/drop-course")
     public boolean dropCourse(DropCourseQuery dropCourseQuery){
         if(dropCourseQuery == null) {

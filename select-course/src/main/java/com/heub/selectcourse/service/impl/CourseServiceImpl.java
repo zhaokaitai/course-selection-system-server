@@ -67,20 +67,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
 
     @Override
     public boolean dropCourse(DropCourseQuery dropCourseQuery) {
-        LambdaQueryWrapper<LearningLesson> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(LearningLesson::getClassId, dropCourseQuery.getClassId()).eq(LearningLesson::getStudentNumber, dropCourseQuery.getStudentNumber());
+        //添加退课记录
         Course course = courseMapper.selectById(teachingClassService.getById(dropCourseQuery.getClassId()));
         operationRecordService.addDelRecord(dropCourseQuery.getStudentNumber(), dropCourseQuery.getClassId(),course);
+        //删除课表中的课程信息
+        LambdaQueryWrapper<LearningLesson> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(LearningLesson::getClassId, dropCourseQuery.getClassId()).eq(LearningLesson::getStudentNumber, dropCourseQuery.getStudentNumber());
         return learningLessonService.remove(queryWrapper);
     }
 
     @Override
     public boolean chooseCourse(ChooseCourseQuery chooseCourseQuery) {
+        //添加选课记录
+        Course course = courseMapper.selectById(teachingClassService.getById(chooseCourseQuery.getClassId()));
+        operationRecordService.addCreRecord(chooseCourseQuery.getStudentNumber(), chooseCourseQuery.getClassId(),course);
+        //添加课程到课表
         LearningLesson learningLesson = new LearningLesson();
         learningLesson.setIdOptional(0);
         BeanUtils.copyProperties(chooseCourseQuery, learningLesson);
-        Course course = courseMapper.selectById(teachingClassService.getById(chooseCourseQuery.getClassId()));
-        operationRecordService.addCreRecord(chooseCourseQuery.getStudentNumber(), chooseCourseQuery.getClassId(),course);
         return learningLessonService.save(learningLesson);
     }
 
