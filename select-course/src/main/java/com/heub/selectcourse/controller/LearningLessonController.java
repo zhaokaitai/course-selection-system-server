@@ -2,8 +2,6 @@ package com.heub.selectcourse.controller;
 
 import com.heub.selectcourse.common.BaseResponse;
 import com.heub.selectcourse.common.ResultUtils;
-import com.heub.selectcourse.model.domain.LearningLesson;
-import com.heub.selectcourse.model.domain.TeachingClass;
 import com.heub.selectcourse.model.vo.LearningLessonVo;
 import com.heub.selectcourse.service.LearningLessonService;
 import jakarta.annotation.Resource;

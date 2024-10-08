@@ -1,13 +1,7 @@
 package com.heub.selectcourse.controller;
 
-import cn.hutool.core.date.DateTime;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.heub.selectcourse.common.BaseResponse;
-import com.heub.selectcourse.common.ErrorCode;
 import com.heub.selectcourse.common.ResultUtils;
-import com.heub.selectcourse.exception.BusinessException;
-import com.heub.selectcourse.model.domain.*;
 import com.heub.selectcourse.model.query.ChooseCourseQuery;
 import com.heub.selectcourse.model.query.CourseQuery;
 import com.heub.selectcourse.model.query.DropCourseQuery;
@@ -15,14 +9,12 @@ import com.heub.selectcourse.model.vo.CourseClassVo;
 import com.heub.selectcourse.service.*;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
