@@ -53,7 +53,7 @@ public class LearningLessonServiceImpl extends ServiceImpl<LearningLessonMapper,
             //加入教学班的相关信息
            /* QueryWrapper<TeachingClass> teachingClassQueryWrapper = new QueryWrapper<>();
             teachingClassQueryWrapper.eq("id", learningLesson.getClassId());*/
-            TeachingClass teachingClass = teachingClassMapper.selectById(learningLesson.getId());
+            TeachingClass teachingClass = teachingClassMapper.selectById(learningLesson.getClassId());
             BeanUtils.copyProperties(teachingClass, learningLessonVo);
             learningLessonVos.add(learningLessonVo);
         }
