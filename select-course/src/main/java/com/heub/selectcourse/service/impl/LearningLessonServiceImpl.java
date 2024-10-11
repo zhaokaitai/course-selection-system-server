@@ -59,6 +59,20 @@ public class LearningLessonServiceImpl extends ServiceImpl<LearningLessonMapper,
         }
         return learningLessonVos;
     }
+
+    @Override
+    public List<String> searchStudentNumberByLessonId(Long classId) {
+        QueryWrapper<LearningLesson> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("class_id", classId);
+        List<LearningLesson> learningLessons = learningLessonMapper.selectList(queryWrapper);
+        List<String> studentNumbers = new ArrayList<>();
+        for (LearningLesson lesson : learningLessons) {
+            if (lesson.getStudentNumber()!= null) {
+                studentNumbers.add(lesson.getStudentNumber());
+            }
+        }
+        return studentNumbers;
+    }
 }
 
 

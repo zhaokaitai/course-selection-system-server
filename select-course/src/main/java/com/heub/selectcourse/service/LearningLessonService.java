@@ -16,4 +16,6 @@ import java.util.List;
 public interface LearningLessonService extends IService<LearningLesson> {
 
     List<LearningLessonVo> searchSelfLesson(String studentNumber);
+
+    List<String> searchStudentNumberByLessonId(Long lessonId);
 }

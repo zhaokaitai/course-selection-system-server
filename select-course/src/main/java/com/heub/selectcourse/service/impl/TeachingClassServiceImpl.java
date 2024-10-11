@@ -34,6 +34,11 @@ public class TeachingClassServiceImpl extends ServiceImpl<TeachingClassMapper, T
         TeachingClass teachingClass = teachingClassMapper.selectById(teachingClassId);
         return teachingClass.getCourseCode();
     }
+
+    @Override
+    public String getTeachingClassName(Integer teachingClassId) {
+        return teachingClassMapper.selectById(teachingClassId).getClassName();
+    }
 }
 
 

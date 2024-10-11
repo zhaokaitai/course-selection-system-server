@@ -1,8 +1,11 @@
 package com.heub.selectcourse.service;
 
+import com.heub.selectcourse.excel.studentInfo;
 import com.heub.selectcourse.model.domain.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 /**
 * @author 秦乾正
@@ -19,4 +22,6 @@ public interface StudentService extends IService<Student> {
     Student getSafetyStudent(Student originStudent);
 
     int studentLogout(HttpServletRequest request);
+
+    List<studentInfo> getStudentInfoList(List<String> studentNumberList);
 }

@@ -16,4 +16,6 @@ public interface TeachingClassService extends IService<TeachingClass> {
     List<TeachingClass> getTeachingClassList(String courseCode);
 
     String getCOurseCode(Integer teachingClassId);
+
+    String getTeachingClassName(Integer teachingClassId);
 }

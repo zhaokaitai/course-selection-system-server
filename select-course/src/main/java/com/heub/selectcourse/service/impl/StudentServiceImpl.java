@@ -4,8 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.common.ErrorCode;
+import com.heub.selectcourse.excel.studentInfo;
 import com.heub.selectcourse.exception.BusinessException;
+import com.heub.selectcourse.mapper.CollegeMapper;
 import com.heub.selectcourse.model.domain.Student;
+import com.heub.selectcourse.service.CollegeService;
+import com.heub.selectcourse.service.CourseService;
 import com.heub.selectcourse.service.StudentService;
 import com.heub.selectcourse.mapper.StudentMapper;
 import jakarta.annotation.Resource;
@@ -13,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +33,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
 
     @Resource
     private StudentMapper studentMapper;
+
+    @Resource
+    private CollegeMapper collegeMapper;
 
     private static final String SALT = "HEUB";
 
@@ -133,6 +142,26 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
     public int studentLogout(HttpServletRequest request) {
         request.getSession().removeAttribute("studentLoginState");
         return 1;
+    }
+
+    @Override
+    public List<studentInfo> getStudentInfoList(List<String> studentNumberList) {
+        if (studentNumberList == null || studentNumberList.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Student> students = studentMapper.selectBatchIds(studentNumberList);
+        List<studentInfo> studentInfoList = new ArrayList<>();
+        for (Student student : students) {
+            studentInfo info = new studentInfo();
+            info.setStudentNumber(student.getStudentNumber());
+            info.setStudentName(student.getUserName());
+            info.setGrade(student.getGrade());
+            String collegeName = collegeMapper.selectById(student.getCollegeId()).getCollegeName();
+            info.setCollege(collegeName);
+            info.setMajor(student.getMajor());
+            studentInfoList.add(info);
+        }
+        return studentInfoList;
     }
 }
 
