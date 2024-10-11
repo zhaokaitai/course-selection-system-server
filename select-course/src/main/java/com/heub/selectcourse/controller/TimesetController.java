@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ public class TimesetController {
     private TimesetService timesetService;
 
     @PostMapping("on")
-    public boolean on(TimesetQuery timesetQuery) {
+    public boolean on(@RequestBody  TimesetQuery timesetQuery) {
         Timeset timeset = new Timeset();
         BeanUtils.copyProperties(timesetQuery, timeset);
         return timesetService.save(timeset);
