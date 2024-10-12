@@ -104,6 +104,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager>
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + managerPassword).getBytes());
         // 3. 插入数据
         Manager manager = new Manager();
+        manager.setId(Integer.valueOf(managerNumber));
         manager.setAccount(managerNumber);
         manager.setPassword(encryptPassword);
         boolean saveResult = this.save(manager);
