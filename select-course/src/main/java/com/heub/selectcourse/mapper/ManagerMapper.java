@@ -3,6 +3,7 @@ package com.heub.selectcourse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.heub.selectcourse.model.domain.Manager;
+import org.apache.ibatis.annotations.Select;
 
 /**
 * @author 秦乾正
@@ -11,7 +12,9 @@ import com.heub.selectcourse.model.domain.Manager;
 * @Entity generator.domain.Manager
 */
 public interface ManagerMapper extends BaseMapper<Manager> {
-
+	
+	@Select("select * from manager where phone = #{phone}")
+	Manager selectByPhone(String phone);
 }
 
 

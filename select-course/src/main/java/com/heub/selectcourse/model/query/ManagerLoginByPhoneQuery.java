@@ -10,14 +10,12 @@ import java.io.Serializable;
  * @author 秦乾正
  */
 @Data
-public class ManagerRegisterQuery implements Serializable {
+public class ManagerLoginByPhoneQuery implements Serializable {
 
     private static final long serialVersionUID = 3191241716373120793L;
 
-    private String managerNumber;
+    private String phone;
 
-    private String managerPassword;
-
-    private String checkPassword;
+    private String smsCode;
 
 }
