@@ -3,6 +3,9 @@ package com.heub.selectcourse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.heub.selectcourse.model.domain.TeachingClass;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
 * @author 秦乾正
@@ -11,7 +14,9 @@ import com.heub.selectcourse.model.domain.TeachingClass;
 * @Entity generator.domain.TeachingClass
 */
 public interface TeachingClassMapper extends BaseMapper<TeachingClass> {
-
+	
+	@Select("select id from teaching_class")
+	List<Long> getAllId();
 }
 
 

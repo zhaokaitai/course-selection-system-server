@@ -12,10 +12,8 @@ import com.heub.selectcourse.service.ManagerService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author qqz
@@ -86,8 +84,8 @@ public class ManagerController {
 		return ResultUtils.success(result);
 	}
 	
-	@PostMapping("/changeAvatarUrl")
-	public BaseResponse<Integer> changeAvatarUrl(@RequestBody String avatarUrl, HttpServletRequest request) {
+	@GetMapping("/changeAvatarUrl")
+	public BaseResponse<Integer> changeAvatarUrl(@Param("avatarUrl") String avatarUrl, HttpServletRequest request) {
 		if (avatarUrl == null) {
 			return ResultUtils.error(ErrorCode.PARAMS_ERROR);
 		}
@@ -96,8 +94,8 @@ public class ManagerController {
 		return ResultUtils.success(result);
 	}
 	
-	@PostMapping("/changeManagerName")
-	public BaseResponse<Integer> changeManagerName(@RequestBody String managerName, HttpServletRequest request) {
+	@GetMapping("/changeManagerName")
+	public BaseResponse<Integer> changeManagerName(@Param("managerName") String managerName, HttpServletRequest request) {
 		if (managerName == null) {
 			return ResultUtils.error(ErrorCode.PARAMS_ERROR);
 		}
