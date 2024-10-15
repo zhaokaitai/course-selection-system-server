@@ -85,4 +85,39 @@ public class ManagerController {
 		int result = managerService.resetPassword(phone, smsCode, password, passwordTwo, request);
 		return ResultUtils.success(result);
 	}
+	
+	@PostMapping("/changeAvatarUrl")
+	public BaseResponse<Integer> changeAvatarUrl(@RequestBody String avatarUrl, HttpServletRequest request) {
+		if (avatarUrl == null) {
+			return ResultUtils.error(ErrorCode.PARAMS_ERROR);
+		}
+		
+		int result = managerService.changeAvatarUrl(avatarUrl, request);
+		return ResultUtils.success(result);
+	}
+	
+	@PostMapping("/changeManagerName")
+	public BaseResponse<Integer> changeManagerName(@RequestBody String managerName, HttpServletRequest request) {
+		if (managerName == null) {
+			return ResultUtils.error(ErrorCode.PARAMS_ERROR);
+		}
+		
+		int result = managerService.changeManagerName(managerName, request);
+		return ResultUtils.success(result);
+	}
+	
+	@PostMapping("/changePhone")
+	public BaseResponse<Integer> changePhone(@RequestBody ManagerLoginByPhoneQuery managerLoginByPhoneQuery, HttpServletRequest request) {
+		if (managerLoginByPhoneQuery == null) {
+			return null;
+		}
+		String phone = managerLoginByPhoneQuery.getPhone();
+		String smsCode = managerLoginByPhoneQuery.getSmsCode();
+		
+		if (StrUtil.hasBlank(phone, smsCode)) {
+			return null;
+		}
+		int result = managerService.changePhone(phone, smsCode, request);
+		return ResultUtils.success(result);
+	}
 }

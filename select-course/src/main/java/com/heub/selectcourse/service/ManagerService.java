@@ -21,4 +21,10 @@ public interface ManagerService extends IService<Manager> {
     Manager loginByPhone(String phone, String smsCode, HttpServletRequest request);
     
     int resetPassword(String phone, String smsCode, String password, String passwordTwo, HttpServletRequest request);
+    
+    int changeAvatarUrl(String avatarUrl, HttpServletRequest request);
+    
+    int changeManagerName(String managerName, HttpServletRequest request);
+    
+    int changePhone(String phone, String smsCode, HttpServletRequest request);
 }

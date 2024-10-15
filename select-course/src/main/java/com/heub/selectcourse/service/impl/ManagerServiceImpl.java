@@ -1,6 +1,8 @@
 package com.heub.selectcourse.service.impl;
 
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.common.ErrorCode;
@@ -150,6 +152,65 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager>
 		// 3. 更新密码
 		manager.setPassword(encryptPassword);
 		boolean updateResult = this.updateById(manager);
+		if (!updateResult) {
+			return 0;
+		}
+		
+		return 1;
+	}
+	
+	@Override
+	public int changeAvatarUrl(String avatarUrl, HttpServletRequest request) {
+		// 1. 获取用户的登录态
+		Manager managerLoginState = (Manager) request.getSession().getAttribute("managerLoginState");
+		
+		if (managerLoginState == null) {
+			return 0;
+		}
+		
+		Boolean updateResult = managerMapper.updateAvatarUrlById(managerLoginState.getId(), avatarUrl);
+		
+		if (!updateResult) {
+			return 0;
+		}
+		
+		return 1;
+	}
+	
+	@Override
+	public int changeManagerName(String managerName, HttpServletRequest request) {
+		// 1. 获取用户的登录态
+		Manager managerLoginState = (Manager) request.getSession().getAttribute("managerLoginState");
+		
+		if (managerLoginState == null) {
+			return 0;
+		}
+		
+		Boolean updateResult = managerMapper.updateManagerNameById(managerLoginState.getId(), managerName);
+		
+		if (!updateResult) {
+			return 0;
+		}
+		
+		return 1;
+	}
+	
+	@Override
+	public int changePhone(String phone, String smsCode, HttpServletRequest request) {
+		// 1. 校验
+		if (StrUtil.hasBlank(phone, smsCode)) {
+			return 0;
+		}
+		
+		// 2. 获取用户的登录态
+		Manager managerLoginState = (Manager) request.getSession().getAttribute("managerLoginState");
+		
+		if (managerLoginState == null) {
+			return 0;
+		}
+		
+		Boolean updateResult = managerMapper.updatePhoneById(managerLoginState.getId(), phone);
+		
 		if (!updateResult) {
 			return 0;
 		}
