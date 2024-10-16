@@ -27,9 +27,11 @@ public class TimesetController {
 
     @PostMapping("on")
     public boolean on(@RequestBody  TimesetQuery timesetQuery) {
-        Timeset timeset = new Timeset();
+        Timeset timeset = timesetService.getById(1);
+
         BeanUtils.copyProperties(timesetQuery, timeset);
-        return timesetService.save(timeset);
+        return timesetService.updateById(timeset);
+
     }
 
 

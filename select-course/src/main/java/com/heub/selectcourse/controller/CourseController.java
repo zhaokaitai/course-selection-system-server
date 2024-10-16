@@ -1,6 +1,7 @@
 package com.heub.selectcourse.controller;
 
 import com.heub.selectcourse.common.BaseResponse;
+import com.heub.selectcourse.common.ErrorCode;
 import com.heub.selectcourse.common.ResultUtils;
 import com.heub.selectcourse.model.query.ChooseCourseQuery;
 import com.heub.selectcourse.model.query.CourseQuery;
@@ -30,8 +31,13 @@ public class CourseController {
 
 
     @GetMapping("/list")
-    public BaseResponse<List<CourseClassVo>> courseClassList(@RequestBody CourseQuery courseQuery) {
-        return  ResultUtils.success(courseService.getCourseClassList(courseQuery));
+    public BaseResponse<List<CourseClassVo>> courseClassList(CourseQuery courseQuery) {
+        List<CourseClassVo> courseClassList = courseService.getCourseClassList(courseQuery);
+        if (courseClassList == null || courseClassList.size() == 0) {
+            return ResultUtils.error(ErrorCode.FORBIDDEN,"当前时间不在选课时间范围内。");
+        }
+
+        return ResultUtils.success(courseService.getCourseClassList(courseQuery));
     }
 
     //选课操作

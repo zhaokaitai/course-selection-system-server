@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.mapper.CourseMapper;
+import com.heub.selectcourse.mapper.TimesetMapper;
 import com.heub.selectcourse.model.domain.Course;
 import com.heub.selectcourse.model.domain.LearningLesson;
 import com.heub.selectcourse.model.domain.TeachingClass;
+import com.heub.selectcourse.model.domain.Timeset;
 import com.heub.selectcourse.model.query.ChooseCourseQuery;
 import com.heub.selectcourse.model.query.CourseQuery;
 import com.heub.selectcourse.model.query.DropCourseQuery;
@@ -17,10 +19,14 @@ import com.heub.selectcourse.service.CourseService;
 import com.heub.selectcourse.service.LearningLessonService;
 import com.heub.selectcourse.service.OperationRecordService;
 import com.heub.selectcourse.service.TeachingClassService;
+import com.heub.selectcourse.util.TimeRangeChecker;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,16 +50,29 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Resource
     private OperationRecordService operationRecordService;
 
+    @Resource
+    private TimesetMapper timesetMapper;
+
 
 
     @Override
     public List<CourseClassVo> getCourseClassList(CourseQuery courseQuery) {
+        List<CourseClassVo> courseClassVos = new ArrayList<>();
+        //判断是否在选课时间
+        Timeset timeset = timesetMapper.selectById(1);
+        //LocalDateTime now = LocalDateTime.now();
+        Date startTime = timeset.getStartTime();
+        Date endTime = timeset.getEndTime();
+        boolean isInRange = TimeRangeChecker.isWithinSelectionTime(startTime, endTime);
+        if (!isInRange) {
+            System.out.println("当前时间不在选课时间范围内。");
+            return courseClassVos;
+        }
         //获取课程列表
         Course course = new Course();
         BeanUtils.copyProperties(courseQuery, course);
         QueryWrapper<Course> courseQueryWrapper = getCourseQueryWrapper(courseQuery);
         List<Course> courses = courseMapper.selectList(courseQueryWrapper);
-        List<CourseClassVo> courseClassVos = new ArrayList<>();
         for (Course c : courses) {
             CourseClassVo courseClassVo = new CourseClassVo();
             courseClassVo.setCourse(c);
