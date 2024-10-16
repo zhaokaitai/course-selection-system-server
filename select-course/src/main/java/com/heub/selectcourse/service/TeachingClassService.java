@@ -18,4 +18,8 @@ public interface TeachingClassService extends IService<TeachingClass> {
     String getCOurseCode(Integer teachingClassId);
 
     String getTeachingClassName(Integer teachingClassId);
+
+    int reduceTeachingClassCapacity(Integer teachingClassId);
+
+    int addTeachingClassCapacity(Integer teachingClassId);
 }

@@ -47,7 +47,6 @@ public class CourseController {
             return false;
         }
         return courseService.chooseCourse(chooseCourseQuery);
-
     }
 
     //退课操作

@@ -68,7 +68,7 @@ public class TeachingClass implements Serializable {
     /**
      * 当前学年
      */
-    private String currentTime;
+    private String currentTim;
 
     /**
      * 当前学期

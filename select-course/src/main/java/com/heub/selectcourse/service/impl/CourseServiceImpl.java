@@ -23,6 +23,7 @@ import com.heub.selectcourse.util.TimeRangeChecker;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -87,23 +88,29 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Override
     public boolean dropCourse(DropCourseQuery dropCourseQuery) {
         //添加退课记录
-        Course course = courseMapper.selectById(teachingClassService.getById(dropCourseQuery.getClassId()));
-        operationRecordService.addDelRecord(dropCourseQuery.getStudentNumber(), dropCourseQuery.getClassId(),course);
+        Long classId = dropCourseQuery.getClassId();
+        Course course = courseMapper.selectById(teachingClassService.getById(classId));
+        operationRecordService.addDelRecord(dropCourseQuery.getStudentNumber(), classId,course);
         //删除课表中的课程信息
         LambdaQueryWrapper<LearningLesson> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(LearningLesson::getClassId, dropCourseQuery.getClassId()).eq(LearningLesson::getStudentNumber, dropCourseQuery.getStudentNumber());
+        queryWrapper.eq(LearningLesson::getClassId, classId).eq(LearningLesson::getStudentNumber, dropCourseQuery.getStudentNumber());
+        //课程容量加一
+        teachingClassService.addTeachingClassCapacity(Math.toIntExact(classId));
         return learningLessonService.remove(queryWrapper);
     }
 
     @Override
-    public boolean chooseCourse(ChooseCourseQuery chooseCourseQuery) {
+    public boolean chooseCourse(@RequestBody ChooseCourseQuery chooseCourseQuery) {
         //添加选课记录
-        Course course = courseMapper.selectById(teachingClassService.getById(chooseCourseQuery.getClassId()));
-        operationRecordService.addCreRecord(chooseCourseQuery.getStudentNumber(), chooseCourseQuery.getClassId(),course);
+        Long classId = chooseCourseQuery.getClassId();
+        Course course = courseMapper.selectById(teachingClassService.getById(classId));
+        operationRecordService.addCreRecord(chooseCourseQuery.getStudentNumber(), classId,course);
         //添加课程到课表
         LearningLesson learningLesson = new LearningLesson();
         learningLesson.setIdOptional(0);
         BeanUtils.copyProperties(chooseCourseQuery, learningLesson);
+        //课程容量减一
+        teachingClassService.reduceTeachingClassCapacity(Math.toIntExact(classId));
         return learningLessonService.save(learningLesson);
     }
 
