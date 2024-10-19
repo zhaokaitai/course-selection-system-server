@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.heub.selectcourse.common.ErrorCode;
+import com.heub.selectcourse.exception.BusinessException;
 import com.heub.selectcourse.mapper.CourseMapper;
 import com.heub.selectcourse.mapper.TimesetMapper;
 import com.heub.selectcourse.model.domain.Course;
@@ -15,6 +17,7 @@ import com.heub.selectcourse.model.query.ChooseCourseQuery;
 import com.heub.selectcourse.model.query.CourseQuery;
 import com.heub.selectcourse.model.query.DropCourseQuery;
 import com.heub.selectcourse.model.vo.CourseClassVo;
+import com.heub.selectcourse.model.vo.LearningLessonVo;
 import com.heub.selectcourse.service.CourseService;
 import com.heub.selectcourse.service.LearningLessonService;
 import com.heub.selectcourse.service.OperationRecordService;
@@ -29,6 +32,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author 秦乾正
@@ -101,9 +105,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
 
     @Override
     public boolean chooseCourse(@RequestBody ChooseCourseQuery chooseCourseQuery) {
-        //添加选课记录
+        //先从课表中获取学生的选课记录的课程id集合中的时间集合
+        List<String> times = learningLessonService.searchSelfLesson(chooseCourseQuery.getStudentNumber())
+                .stream().map(LearningLessonVo::getClassTime)
+                .toList();
         Long classId = chooseCourseQuery.getClassId();
-        Course course = courseMapper.selectById(teachingClassService.getById(classId));
+        TeachingClass teachingClass = teachingClassService.getById(classId);
+        String classTime = teachingClass.getClassTime();
+        Course course = courseMapper.selectById(teachingClass);
+        //查询是否冲突
+        for (String time : times) {
+            if (isTimeConflict(classTime, time)) {
+                throw new BusinessException(ErrorCode.PARAMS_ERROR, "上课时间冲突");
+            }
+        }
+        //添加选课记录
         operationRecordService.addCreRecord(chooseCourseQuery.getStudentNumber(), classId,course);
         //添加课程到课表
         LearningLesson learningLesson = new LearningLesson();
@@ -128,6 +144,45 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         courseQueryWrapper.eq(courseQuery.getCourseOwnership()!=null,"course_ownership", courseQuery.getCourseOwnership());
         return courseQueryWrapper;
     }
+
+    private static boolean isTimeConflict(String time1, String time2) {
+        String[] parts1 = time1.split("/");
+        String[] parts2 = time2.split("/");
+
+        String day1 = parts1[0];
+        String day2 = parts2[0];
+
+        if (!day1.equals(day2)) {
+            return false;
+        }
+
+        // 解析节次范围
+        String[] range1 = parts1[1].split("-");
+        String[] range2 = parts2[1].split("-");
+        int start1 = Integer.parseInt(range1[0]);
+        int end1 = Integer.parseInt(range1[1]);
+        int start2 = Integer.parseInt(range2[0]);
+        int end2 = Integer.parseInt(range2[1]);
+
+        if (start1 <= end2 && end1 >= start2) {
+            // 节次范围有冲突，再检查周数范围
+            String[] weekRange1 = parts1[2].split("-");
+            String[] weekRange2 = parts2[2].split("-");
+            int startWeek1 = Integer.parseInt(weekRange1[0]);
+            int endWeek1 = Integer.parseInt(weekRange1[1]);
+            int startWeek2 = Integer.parseInt(weekRange2[0]);
+            int endWeek2 = Integer.parseInt(weekRange2[1]);
+
+            return isWeekRangeOverlap(startWeek1, endWeek1, startWeek2, endWeek2);
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean isWeekRangeOverlap(int startWeek1, int endWeek1, int startWeek2, int endWeek2) {
+        return!(endWeek1 < startWeek2 || startWeek1 > endWeek2);
+    }
+
 }
 
 

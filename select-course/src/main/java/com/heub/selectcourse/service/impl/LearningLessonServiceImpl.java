@@ -10,6 +10,7 @@ import com.heub.selectcourse.model.domain.LearningLesson;
 import com.heub.selectcourse.model.domain.TeachingClass;
 import com.heub.selectcourse.model.vo.LearningLessonVo;
 import com.heub.selectcourse.service.LearningLessonService;
+import com.heub.selectcourse.service.TeachingClassService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -44,15 +45,12 @@ public class LearningLessonServiceImpl extends ServiceImpl<LearningLessonMapper,
         queryWrapper.eq("student_number", studentNumber);
         List<LearningLesson> learningLessons = learningLessonMapper.selectList(queryWrapper);
         //2.2获取教学班相关信息
-
         List<LearningLessonVo> learningLessonVos = new ArrayList<>();
         for (LearningLesson learningLesson : learningLessons) {
             //加入课表的相关信息
             LearningLessonVo learningLessonVo = new LearningLessonVo();
             BeanUtils.copyProperties(learningLesson, learningLessonVo);
             //加入教学班的相关信息
-           /* QueryWrapper<TeachingClass> teachingClassQueryWrapper = new QueryWrapper<>();
-            teachingClassQueryWrapper.eq("id", learningLesson.getClassId());*/
             TeachingClass teachingClass = teachingClassMapper.selectById(learningLesson.getClassId());
             BeanUtils.copyProperties(teachingClass, learningLessonVo);
             learningLessonVos.add(learningLessonVo);
@@ -73,6 +71,8 @@ public class LearningLessonServiceImpl extends ServiceImpl<LearningLessonMapper,
         }
         return studentNumbers;
     }
+
+
 }
 
 

@@ -53,6 +53,8 @@ public class TeachingClassServiceImpl extends ServiceImpl<TeachingClassMapper, T
         teachingClass.setCapacity(teachingClass.getCapacity() +1);
         return teachingClassMapper.updateById(teachingClass);
     }
+
+
 }
 
 
