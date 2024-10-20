@@ -22,4 +22,6 @@ public interface TeachingClassService extends IService<TeachingClass> {
     int reduceTeachingClassCapacity(Integer teachingClassId);
 
     int addTeachingClassCapacity(Integer teachingClassId);
+
+    List<Long> getAllId();
 }

@@ -24,4 +24,10 @@ public interface StudentService extends IService<Student> {
     int studentLogout(HttpServletRequest request);
 
     List<studentInfo> getStudentInfoList(List<String> studentNumberList);
+
+    int resetPassword(String phone, String smsCode, String password, String passwordTwo, HttpServletRequest request);
+
+    int changePhone(String phone, String smsCode, String studentNumber,HttpServletRequest request);
+
+    Student loginByPhone(String phone, String smsCode, HttpServletRequest request);
 }

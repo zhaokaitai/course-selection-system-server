@@ -163,6 +163,70 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         }
         return studentInfoList;
     }
+
+    @Override
+    public int resetPassword(String phone, String smsCode, String password, String passwordTwo, HttpServletRequest request) {
+        // 1. 校验
+        if (StrUtil.hasBlank(phone, smsCode, password, passwordTwo)) {
+            return 0;
+        }
+        // 查询用户是否存在
+        Student student = studentMapper.selectByphone(phone);
+        System.out.println(
+                student
+        );
+        if (student == null) {return 0;}
+
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + password).getBytes());
+
+        student.setUserPassword(encryptPassword);
+        boolean updateResult = this.updateById(student);
+        if (!updateResult) {
+            System.out.println(updateResult);
+            return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    public int changePhone(String phone, String smsCode,String studnetNumber,HttpServletRequest request) {
+        // 1. 校验
+        if (StrUtil.hasBlank(phone, smsCode)) {
+            return 0;
+        }
+
+        // 2. 获取用户的登录态
+        if (studnetNumber == null) {
+            return 0;
+        }
+
+        Boolean updateResult = studentMapper.updatePhoneById(studnetNumber, phone);
+
+        if (!updateResult) {
+            return 0;
+        }
+
+        return 1;
+    }
+
+    @Override
+    public Student loginByPhone(String phone, String smsCode, HttpServletRequest request)
+    {
+        // 1. 校验
+        if (StrUtil.hasBlank(phone, smsCode)) {
+            return null;
+        }
+        // 查询用户是否存在
+        Student student = studentMapper.selectByphone(phone);
+
+        if (student == null) {return null;}
+
+        Student safetyStudent = getSafetyStudent(student);
+        // 4. 记录用户的登录态
+        request.getSession().setAttribute("studentLoginState", safetyStudent);
+        return safetyStudent;
+
+    }
 }
 
 

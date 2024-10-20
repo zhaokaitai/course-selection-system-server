@@ -2,6 +2,8 @@ package com.heub.selectcourse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.heub.selectcourse.model.domain.Student;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
 * @author 秦乾正
@@ -10,7 +12,11 @@ import com.heub.selectcourse.model.domain.Student;
 * @Entity generator.domain.Student
 */
 public interface StudentMapper extends BaseMapper<Student> {
+    @Select("select * from student where phone = #{phone}")
+    Student selectByphone(String phone);
 
+    @Update("update student set phone = #{phone}")
+    Boolean updatePhoneById(String studentNumber, String phone);
 }
 
 

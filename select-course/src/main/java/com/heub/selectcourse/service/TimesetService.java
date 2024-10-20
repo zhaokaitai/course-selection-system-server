@@ -2,7 +2,7 @@ package com.heub.selectcourse.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.heub.selectcourse.model.domain.Timeset;
-import com.heub.selectcourse.model.query.TimeSetQuery;
+import com.heub.selectcourse.model.query.TimesetQuery;
 
 /**
 * @author 秦乾正
@@ -11,7 +11,7 @@ import com.heub.selectcourse.model.query.TimeSetQuery;
 */
 public interface TimesetService extends IService<Timeset> {
 	
-	Boolean save(TimeSetQuery timesetQuery);
+	Boolean save(TimesetQuery timesetQuery);
 	
-	TimeSetQuery getAll();
+	TimesetQuery getAll();
 }

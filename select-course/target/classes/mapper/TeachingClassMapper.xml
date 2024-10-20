@@ -23,6 +23,6 @@
         id,course_code,class_name,
         classroom,class_time,class_place,
         selected_num,capacity,teacher_id,
-        book_code,current_time,current_term
+        book_code,current_tim,current_term
     </sql>
 </mapper>

@@ -54,6 +54,11 @@ public class TeachingClassServiceImpl extends ServiceImpl<TeachingClassMapper, T
         return teachingClassMapper.updateById(teachingClass);
     }
 
+    @Override
+    public List<Long> getAllId() {
+        return List.of();
+    }
+
 
 }
 
