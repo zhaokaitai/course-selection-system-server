@@ -64,6 +64,17 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     public List<CourseClassVo> getCourseClassList(CourseQuery courseQuery) {
         List<CourseClassVo> courseClassVos = new ArrayList<>();
 
+        //判断是否在选课时间
+        Timeset timeset = timesetMapper.selectById(1);
+        //LocalDateTime now = LocalDateTime.now();
+        Date startTime = timeset.getStartTime();
+        Date endTime = timeset.getEndTime();
+        boolean isInRange = TimeRangeChecker.isWithinSelectionTime(startTime, endTime);
+        if (!isInRange) {
+            System.out.println("当前时间不在选课时间范围内。");
+            return courseClassVos;
+        }
+
         //获取课程列表
         Course course = new Course();
         BeanUtils.copyProperties(courseQuery, course);
