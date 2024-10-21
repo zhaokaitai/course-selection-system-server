@@ -35,13 +35,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* @author 秦乾正
-* @description 针对表【course】的数据库操作Service实现
-* @createDate 2024-09-26 19:09:47
-*/
+ * @author 秦乾正
+ * @description 针对表【course】的数据库操作Service实现
+ * @createDate 2024-09-26 19:09:47
+ */
 @Service
 public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
-    implements CourseService {
+        implements CourseService {
 
     @Resource
     private CourseMapper courseMapper;
@@ -63,6 +63,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Override
     public List<CourseClassVo> getCourseClassList(CourseQuery courseQuery) {
         List<CourseClassVo> courseClassVos = new ArrayList<>();
+
         //判断是否在选课时间
         Timeset timeset = timesetMapper.selectById(1);
         //LocalDateTime now = LocalDateTime.now();
@@ -73,11 +74,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             System.out.println("当前时间不在选课时间范围内。");
             return courseClassVos;
         }
+
         //获取课程列表
         Course course = new Course();
         BeanUtils.copyProperties(courseQuery, course);
         QueryWrapper<Course> courseQueryWrapper = getCourseQueryWrapper(courseQuery);
         List<Course> courses = courseMapper.selectList(courseQueryWrapper);
+
         for (Course c : courses) {
             CourseClassVo courseClassVo = new CourseClassVo();
             courseClassVo.setCourse(c);
@@ -85,6 +88,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             courseClassVo.setTeachingClassesList(teachingClassList);
             courseClassVos.add(courseClassVo);
         }
+        System.out.println(courseClassVos);
         return courseClassVos;
 
     }
@@ -116,7 +120,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         //查询是否冲突
         for (String time : times) {
             if (isTimeConflict(classTime, time)) {
-                throw new BusinessException(ErrorCode.PARAMS_ERROR, "上课时间冲突");
+                return false;
             }
         }
         //添加选课记录
@@ -184,7 +188,3 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
 }
-
-
-
-

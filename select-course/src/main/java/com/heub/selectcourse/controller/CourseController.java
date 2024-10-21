@@ -57,4 +57,5 @@ public class CourseController {
         }
         return courseService.dropCourse(dropCourseQuery);
     }
+
 }
