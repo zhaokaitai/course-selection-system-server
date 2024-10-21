@@ -1,11 +1,10 @@
 package com.heub.selectcourse.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.mapper.TimesetMapper;
 import com.heub.selectcourse.model.domain.Timeset;
-import com.heub.selectcourse.model.query.TimeSetQuery;
+import com.heub.selectcourse.model.query.TimesetQuery;
 import com.heub.selectcourse.service.TimesetService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class TimesetServiceImpl extends ServiceImpl<TimesetMapper, Timeset>
 	
 	@Override
 	@Transactional
-	public Boolean save(TimeSetQuery timesetQuery) {
+	public Boolean save(TimesetQuery timesetQuery) {
 		if (ObjectUtil.hasEmpty(timesetQuery.getFirstDateTime1(), timesetQuery.getSecondDateTime1(), timesetQuery.getFirstDateTime2(),
 				timesetQuery.getSecondDateTime2(), timesetQuery.getThirdDateTime2(), timesetQuery.getThirdDateTime1())) {
 			return null;
@@ -74,9 +73,9 @@ public class TimesetServiceImpl extends ServiceImpl<TimesetMapper, Timeset>
 	}
 	
 	@Override
-	public TimeSetQuery getAll() {
+	public TimesetQuery getAll() {
 		List<Timeset> timesetList = timesetMapper.getAll();
-		TimeSetQuery timeSetQuery = new TimeSetQuery();
+		TimesetQuery timeSetQuery = new TimesetQuery();
 		
 		timesetList.forEach(timeset -> {
 			switch (timeset.getNumSelect()) {

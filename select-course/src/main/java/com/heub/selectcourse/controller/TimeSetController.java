@@ -1,19 +1,12 @@
 package com.heub.selectcourse.controller;
-
 import com.heub.selectcourse.common.BaseResponse;
 import com.heub.selectcourse.common.ErrorCode;
 import com.heub.selectcourse.common.ResultUtils;
-import com.heub.selectcourse.model.domain.Timeset;
-import com.heub.selectcourse.model.query.TimeSetQuery;
+import com.heub.selectcourse.model.query.TimesetQuery;
 import com.heub.selectcourse.service.TimesetService;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 /**
  * @author qqz
  * @date 2024/9/29
@@ -23,13 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/timeSet")
 @Slf4j
-
-public class TimeSetController {
+public class TimesetController {
     @Resource
     private TimesetService timesetService;
-
     @PostMapping()
-    public BaseResponse<Boolean> setTime(@RequestBody TimeSetQuery timesetQuery) {
+    public BaseResponse<Boolean> setTime(@RequestBody TimesetQuery timesetQuery) {
         if (timesetQuery == null) {
             return ResultUtils.error(ErrorCode.PARAMS_ERROR);
         }
@@ -38,9 +29,7 @@ public class TimeSetController {
     }
     
     @GetMapping()
-    public BaseResponse<TimeSetQuery> getTimeSets() {
+    public BaseResponse<TimesetQuery> getTimeSets() {
         return ResultUtils.success(timesetService.getAll());
     }
-
-
 }

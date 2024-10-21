@@ -1,29 +1,20 @@
 package com.heub.selectcourse.excel;
 
 import cn.hutool.core.date.DateTime;
-import com.alibaba.excel.EasyExcel;
-import com.heub.selectcourse.excel.studentInfo;
-import com.heub.selectcourse.model.domain.LearningLesson;
-import com.heub.selectcourse.model.domain.TeachingClass;
 import com.heub.selectcourse.service.LearningLessonService;
 import com.heub.selectcourse.service.StudentService;
 import com.heub.selectcourse.service.TeachingClassService;
 import jakarta.annotation.Resource;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +23,6 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -40,7 +30,7 @@ import java.util.zip.ZipOutputStream;
 @RestController
 @RequestMapping("/data")
 @Slf4j
-public class ExcelWriteTest {
+public class Excel {
 	
 	@Resource
 	private LearningLessonService learningLessonService;

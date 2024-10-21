@@ -1,16 +1,12 @@
 package com.heub.selectcourse.controller;
-
-import com.heub.selectcourse.model.domain.Timeset;
+import com.heub.selectcourse.common.BaseResponse;
+import com.heub.selectcourse.common.ErrorCode;
+import com.heub.selectcourse.common.ResultUtils;
 import com.heub.selectcourse.model.query.TimesetQuery;
 import com.heub.selectcourse.service.TimesetService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 /**
  * @author qqz
  * @date 2024/9/29
@@ -18,21 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
  * description
  */
 @RestController
-@RequestMapping("/timeset")
+@RequestMapping("/timeSet")
 @Slf4j
-
 public class TimesetController {
     @Resource
     private TimesetService timesetService;
-
-    @PostMapping("on")
-    public boolean on(@RequestBody  TimesetQuery timesetQuery) {
-        Timeset timeset = timesetService.getById(1);
-
-        BeanUtils.copyProperties(timesetQuery, timeset);
-        return timesetService.updateById(timeset);
-
+    @PostMapping()
+    public BaseResponse<Boolean> setTime(@RequestBody TimesetQuery timesetQuery) {
+        if (timesetQuery == null) {
+            return ResultUtils.error(ErrorCode.PARAMS_ERROR);
+        }
+        Boolean result = timesetService.save(timesetQuery);
+        return ResultUtils.success(result);
     }
-
-
+    
+    @GetMapping()
+    public BaseResponse<TimesetQuery> getTimeSets() {
+        return ResultUtils.success(timesetService.getAll());
+    }
 }
