@@ -10,5 +10,6 @@ import com.heub.selectcourse.model.domain.College;
 * @createDate 2024-09-29 14:27:21
 */
 public interface CollegeService extends IService<College> {
-
+	
+	void deleteAll();
 }

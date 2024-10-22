@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.mapper.MajorMapper;
 import com.heub.selectcourse.model.domain.Major;
 import com.heub.selectcourse.service.MajorService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 /**
 * @author 秦乾正
@@ -13,7 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major>
     implements MajorService {
-
+	
+	@Resource
+	private MajorMapper majorMapper;
+	
+	@Override
+	public void deleteAll() {
+		majorMapper.deleteAll();
+	}
 }
 
 

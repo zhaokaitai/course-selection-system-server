@@ -30,4 +30,6 @@ public interface StudentService extends IService<Student> {
     int changePhone(String phone, String smsCode, String studentNumber,HttpServletRequest request);
 
     Student loginByPhone(String phone, String smsCode, HttpServletRequest request);
+    
+    void deleteAll();
 }

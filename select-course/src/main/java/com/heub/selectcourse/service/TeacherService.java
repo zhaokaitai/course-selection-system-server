@@ -10,5 +10,6 @@ import com.heub.selectcourse.model.domain.Teacher;
 * @createDate 2024-09-29 14:03:40
 */
 public interface TeacherService extends IService<Teacher> {
-
+	
+	void deleteAll();
 }

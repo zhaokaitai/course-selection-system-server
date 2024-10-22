@@ -3,6 +3,7 @@ package com.heub.selectcourse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.heub.selectcourse.model.domain.Course;
+import org.apache.ibatis.annotations.Delete;
 
 /**
 * @author 秦乾正
@@ -11,7 +12,9 @@ import com.heub.selectcourse.model.domain.Course;
 * @Entity generator.domain.Course
 */
 public interface CourseMapper extends BaseMapper<Course> {
-
+	
+	@Delete("delete from course")
+	void deleteAll();
 }
 
 

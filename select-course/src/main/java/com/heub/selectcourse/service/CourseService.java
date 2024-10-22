@@ -24,4 +24,6 @@ public interface CourseService extends IService<Course> {
     boolean dropCourse(DropCourseQuery dropCourseQuery);
 
     boolean chooseCourse(ChooseCourseQuery chooseCourseQuery);
+    
+    void deleteAll();
 }

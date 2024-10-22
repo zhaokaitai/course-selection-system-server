@@ -7,6 +7,12 @@ spring:
     url: jdbc:mysql://localhost:3360/select_course_manager
     username: root
     password: 123456
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+
 server:
   port: 8080
   servlet:

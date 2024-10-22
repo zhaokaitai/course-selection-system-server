@@ -2,7 +2,9 @@ package com.heub.selectcourse.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.heub.selectcourse.model.domain.Student;
 import com.heub.selectcourse.model.domain.TeachingClass;
+import com.heub.selectcourse.model.vo.TeachingClassVo;
 
 import java.util.List;
 
@@ -24,4 +26,12 @@ public interface TeachingClassService extends IService<TeachingClass> {
     int addTeachingClassCapacity(Integer teachingClassId);
     
     List<Long> getAllId();
+	
+	void deleteAll();
+    
+    List<TeachingClassVo> getAll();
+    
+    List<Student> getAllStudentByTeachingClass(Long teachingClassId);
+    
+    List<TeachingClassVo> searchTeachingClass(String search);
 }

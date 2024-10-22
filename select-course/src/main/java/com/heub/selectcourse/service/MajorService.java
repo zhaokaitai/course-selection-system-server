@@ -10,5 +10,6 @@ import com.heub.selectcourse.model.domain.Major;
 * @createDate 2024-09-29 14:27:33
 */
 public interface MajorService extends IService<Major> {
-
+	
+	void deleteAll();
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heub.selectcourse.mapper.CollegeMapper;
 import com.heub.selectcourse.model.domain.College;
 import com.heub.selectcourse.service.CollegeService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 /**
 * @author 秦乾正
@@ -13,7 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CollegeServiceImpl extends ServiceImpl<CollegeMapper, College>
     implements CollegeService {
-
+	
+	@Resource
+	private CollegeMapper collegeMapper;
+	
+	@Override
+	public void deleteAll() {
+		collegeMapper.deleteAll();
+	}
 }
 
 

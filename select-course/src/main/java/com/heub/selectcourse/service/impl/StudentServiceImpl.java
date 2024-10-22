@@ -227,6 +227,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         return safetyStudent;
 
     }
+    
+    @Override
+    public void deleteAll() {
+        studentMapper.deleteAll();
+    }
 }
 
 

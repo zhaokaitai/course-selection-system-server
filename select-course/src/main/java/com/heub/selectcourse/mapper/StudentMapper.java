@@ -2,6 +2,7 @@ package com.heub.selectcourse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.heub.selectcourse.model.domain.Student;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -17,4 +18,7 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     @Update("update student set phone = #{phone}")
     Boolean updatePhoneById(String studentNumber, String phone);
+    
+    @Delete("delete from student")
+    void deleteAll();
 }

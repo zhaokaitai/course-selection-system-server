@@ -18,5 +18,6 @@ public interface LearningLessonService extends IService<LearningLesson> {
     List<LearningLessonVo> searchSelfLesson(String studentNumber);
 
     List<String> searchStudentNumberByLessonId(Long lessonId);
-
+	
+	List<String> getStudentNumberByTeachingClassId(Long teachingClassId);
 }

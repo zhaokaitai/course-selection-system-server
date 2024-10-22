@@ -3,6 +3,7 @@ package com.heub.selectcourse.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.heub.selectcourse.model.domain.TeachingClass;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -17,6 +18,15 @@ public interface TeachingClassMapper extends BaseMapper<TeachingClass> {
 	
 	@Select("select id from teaching_class")
 	List<Long> getAllId();
+	
+	@Delete("delete from teaching_class")
+	void deleteAll();
+	
+	@Select("select * from teaching_class")
+	List<TeachingClass> getAll();
+	
+	@Select("select * from teaching_class where class_name like concat('%',#{search},'%')")
+	List<TeachingClass> getTeachingClassByName(String search);
 }
 
 

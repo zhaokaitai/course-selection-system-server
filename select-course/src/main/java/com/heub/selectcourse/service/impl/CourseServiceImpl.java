@@ -133,8 +133,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         teachingClassService.reduceTeachingClassCapacity(Math.toIntExact(classId));
         return learningLessonService.save(learningLesson);
     }
-
-
+    
+    @Override
+    public void deleteAll() {
+        courseMapper.deleteAll();
+    }
+    
     private static QueryWrapper<Course> getCourseQueryWrapper(CourseQuery courseQuery) {
         QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
         courseQueryWrapper.eq(courseQuery.getCourseCode()!=null,"course_code", courseQuery.getCourseCode());
