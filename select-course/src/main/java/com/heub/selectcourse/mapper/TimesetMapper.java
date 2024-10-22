@@ -21,6 +21,9 @@ public interface TimesetMapper extends BaseMapper<Timeset> {
 	
 	@Delete("delete from timeset")
 	void deleteAll();
+	
+	@Select("select * from timeset where num_select = #{i}")
+	Timeset selectByNumberSelect(int i);
 }
 
 

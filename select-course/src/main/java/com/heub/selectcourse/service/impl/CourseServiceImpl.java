@@ -65,13 +65,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         List<CourseClassVo> courseClassVos = new ArrayList<>();
 
         //判断是否在选课时间
-        Timeset timeset = timesetMapper.selectById(1);
+        Timeset timeset = timesetMapper.selectByNumberSelect(1);
         //LocalDateTime now = LocalDateTime.now();
         Date startTime = timeset.getStartTime();
         Date endTime = timeset.getEndTime();
         boolean isInRange = TimeRangeChecker.isWithinSelectionTime(startTime, endTime);
         if (!isInRange) {
-            System.out.println("当前时间不在选课时间范围内。");
             return courseClassVos;
         }
 
@@ -115,6 +114,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 .toList();
         Long classId = chooseCourseQuery.getClassId();
         TeachingClass teachingClass = teachingClassService.getById(classId);
+        if (teachingClass.getSelectedNum() >= teachingClass.getCapacity()) {
+            return false;
+        }
         String classTime = teachingClass.getClassTime();
         Course course = courseMapper.selectById(teachingClass);
         //查询是否冲突
