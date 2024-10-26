@@ -59,14 +59,14 @@ public class TeachingClassServiceImpl extends ServiceImpl<TeachingClassMapper, T
 	@Override
 	public int reduceTeachingClassCapacity(Integer teachingClassId) {
 		TeachingClass teachingClass = teachingClassMapper.selectById(teachingClassId);
-		teachingClass.setCapacity(teachingClass.getSelectedNum() + 1);
+		teachingClass.setSelectedNum(teachingClass.getSelectedNum() + 1);
 		return teachingClassMapper.updateById(teachingClass);
 	}
 	
 	@Override
 	public int addTeachingClassCapacity(Integer teachingClassId) {
 		TeachingClass teachingClass = teachingClassMapper.selectById(teachingClassId);
-		teachingClass.setCapacity(teachingClass.getSelectedNum() - 1);
+		teachingClass.setSelectedNum(teachingClass.getSelectedNum() - 1);
 		return teachingClassMapper.updateById(teachingClass);
 	}
 	
